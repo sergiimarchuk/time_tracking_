@@ -1,0 +1,6 @@
+dn: uid=john,ou=users,dc=myorg,dc=local
+objectClass: inetOrgPerson
+cn: John Doe
+sn: Doe
+uid: john
+userPassword: john123
