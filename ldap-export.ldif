@@ -1,0 +1,63 @@
+dn: dc=myorg,dc=local
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: MyOrg
+dc: myorg
+structuralObjectClass: organization
+entryUUID: 23d136e0-e970-103f-8647-6b17a1a64673
+creatorsName: cn=admin,dc=myorg,dc=local
+createTimestamp: 20250629200525Z
+entryCSN: 20250629200525.429374Z#000000#000#000000
+modifiersName: cn=admin,dc=myorg,dc=local
+modifyTimestamp: 20250629200525Z
+
+dn: ou=users,dc=myorg,dc=local
+objectClass: organizationalUnit
+ou: users
+structuralObjectClass: organizationalUnit
+entryUUID: 2b8b5a9c-e974-103f-88bb-8de2a0d27e31
+creatorsName: cn=admin,dc=myorg,dc=local
+createTimestamp: 20250629203416Z
+entryCSN: 20250629203416.380241Z#000000#000#000000
+modifiersName: cn=admin,dc=myorg,dc=local
+modifyTimestamp: 20250629203416Z
+
+dn: ou=groups,dc=myorg,dc=local
+objectClass: organizationalUnit
+ou: groups
+structuralObjectClass: organizationalUnit
+entryUUID: 2b8b98d6-e974-103f-88bc-8de2a0d27e31
+creatorsName: cn=admin,dc=myorg,dc=local
+createTimestamp: 20250629203416Z
+entryCSN: 20250629203416.381836Z#000000#000#000000
+modifiersName: cn=admin,dc=myorg,dc=local
+modifyTimestamp: 20250629203416Z
+
+dn: uid=john,ou=users,dc=myorg,dc=local
+objectClass: inetOrgPerson
+cn: John Doe
+sn: Doe
+uid: john
+structuralObjectClass: inetOrgPerson
+entryUUID: 181811b0-e976-103f-88bd-8de2a0d27e31
+creatorsName: cn=admin,dc=myorg,dc=local
+createTimestamp: 20250629204802Z
+memberOf: cn=developers,ou=groups,dc=myorg,dc=local
+userPassword:: e1NTSEF9UlZGV3dsRjNaeGw0N1hyUUZJU1lKcUIrb2xsaGpaZFM=
+entryCSN: 20250629205156.625194Z#000000#000#000000
+modifiersName: cn=admin,dc=myorg,dc=local
+modifyTimestamp: 20250629205156Z
+
+dn: cn=developers,ou=groups,dc=myorg,dc=local
+objectClass: groupOfUniqueNames
+cn: developers
+uniqueMember: uid=john,ou=users,dc=myorg,dc=local
+structuralObjectClass: groupOfUniqueNames
+entryUUID: 1b08971e-e976-103f-88be-8de2a0d27e31
+creatorsName: cn=admin,dc=myorg,dc=local
+createTimestamp: 20250629204807Z
+entryCSN: 20250629204807.673182Z#000000#000#000000
+modifiersName: cn=admin,dc=myorg,dc=local
+modifyTimestamp: 20250629204807Z
+
