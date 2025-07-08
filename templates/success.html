@@ -11,7 +11,46 @@
 <div>
 
 {{ user, password }}
+{{ month, year  }}
+
+<p>User: {{ user }}</p>
+<p>Month: {{ month }}</p>
+<p>Year: {{ year }}</p>
 
 </div>
+
+<div>
+
+<h2>{{ month }} {{ year }}</h2>
+
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th>Su</th>
+            <th>Mo</th>
+            <th>Tu</th>
+            <th>We</th>
+            <th>Th</th>
+            <th>Fr</th>
+            <th>Sa</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for week in calendar_weeks %}
+        <tr>
+            {% for day in week %}
+                {% if day == 0 %}
+                    <td></td>
+                {% else %}
+                    <td>{{ day }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
 {% endblock %}
 
