@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for
 from datetime import datetime
+from flask import session
 
 from scripts.auth_checker import authenticate as ldap_authenticate
 from scripts.current_month_year import get_current_month_year
@@ -30,7 +31,13 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if authenticate_user(username, password) and getting_unig_id(username, password):
+        if authenticate_user(username, password):
+            #
+            uid=getting_unig_id(username, password)
+            #
+            if uid:
+                session['username'] = username
+                session['uid'] = uid            
             # ✅ Get full calendar info including month number
             month_name, year, calendar_weeks, month_num = get_current_month_year()
 
@@ -41,8 +48,7 @@ def login():
                 month_num=month_num,
                 year=year,
                 calendar_weeks=calendar_weeks,
-                #
-                uid=getting_unig_id(username, password)
+                uid=uid
             )
         else:
             flash("Something goes wrong, please check login or password.")
@@ -51,13 +57,23 @@ def login():
 
 @app.route('/work_hours/<int:year>/<int:month>/<int:day>')
 def work_hours(year, month, day):
+    if 'uid' not in session:
+        flash("Please log in.")
+        return redirect(url_for('login'))
+
     try:
         date_obj = datetime(year, month, day)
     except ValueError:
         flash("Invalid date.")
         return redirect(url_for('login'))
 
-    return render_template('work_hours.html', date=date_obj)
+    return render_template('work_hours.html', date=date_obj, uid=session['uid'])
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash("You have been logged out.")
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)
