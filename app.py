@@ -4,6 +4,7 @@ from datetime import datetime
 
 from scripts.auth_checker import authenticate as ldap_authenticate
 from scripts.current_month_year import get_current_month_year
+from scripts.uid_openldap_getting import authenticate_and_get_info as ldap_uid
 
 
 app = Flask(__name__)
@@ -17,13 +18,19 @@ def authenticate_user(username, password):
         print("LDAP auth error:", e)
         return False
 
+def getting_unig_id(username, password):
+    try:
+        return ldap_uid(username, password).get("entryUUID")
+    except Exception as e:
+        print("LDAP auth error:", e)
+        return False
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if authenticate_user(username, password):
+        if authenticate_user(username, password) and getting_unig_id(username, password):
             # ✅ Get full calendar info including month number
             month_name, year, calendar_weeks, month_num = get_current_month_year()
 
@@ -33,7 +40,9 @@ def login():
                 month=month_name,
                 month_num=month_num,
                 year=year,
-                calendar_weeks=calendar_weeks
+                calendar_weeks=calendar_weeks,
+                #
+                uid=getting_unig_id(username, password)
             )
         else:
             flash("Something goes wrong, please check login or password.")
