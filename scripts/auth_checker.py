@@ -16,6 +16,8 @@ def authenticate(username, password):
         print(f"LDAP authentication error: {e}", file=sys.stderr)
         return False
 
+
+
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print("Usage: auth_checker.py <username> <password>", file=sys.stderr)
