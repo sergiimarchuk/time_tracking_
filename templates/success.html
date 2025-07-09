@@ -42,7 +42,11 @@
                 {% if day == 0 %}
                     <td></td>
                 {% else %}
-                    <td>{{ day }}</td>
+                    <td>
+                        <a href="{{ url_for('work_hours', year=year, month=month_num, day=day) }}">
+                            {{ day }}
+                        </a>
+                    </td>
                 {% endif %}
             {% endfor %}
         </tr>
