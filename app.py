@@ -9,14 +9,14 @@ from scripts.current_month_year import get_current_month_year
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-''' seems this function not needed at all, just check it later again !
+# Wrapper for LDAP authentication with error handling for safe use in the Flask app, it is Error Handling, Separation of Concerns & Readability better abstruction tomunderstand what is going on etc
 def authenticate_user(username, password):
     try:
         return ldap_authenticate(username, password)
     except Exception as e:
         print("LDAP auth error:", e)
         return False
-'''
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
