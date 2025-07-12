@@ -16,6 +16,7 @@ from scripts.forms import LoginForm, WorkHoursForm
 from scripts.forms import WorkHoursForm
 
 
+
 app = Flask(__name__)
 app.secret_key = os.urandom(32)  # Keep your secret key here
 
@@ -69,23 +70,6 @@ def login():
 
     return render_template('login.html', form=form)
 
-'''
-@app.route('/work_hours/<int:year>/<int:month>/<int:day>')
-def work_hours(year, month, day):
-    if 'uid' not in session:
-        flash("Please log in.")
-        return redirect(url_for('login'))
-
-    try:
-        date_obj = datetime(year, month, day)
-    except ValueError:
-        flash("Invalid date.")
-        return redirect(url_for('login'))
-
-    return render_template('work_hours.html', date=date_obj, uid=session['uid'])
-'''
-
-from scripts.forms import WorkHoursForm
 
 @app.route('/work_hours/<int:year>/<int:month>/<int:day>', methods=['GET', 'POST'])
 def work_hours(year, month, day):
