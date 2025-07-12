@@ -53,10 +53,10 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+              <a class="nav-link custom-purple" href="#">Time Tracking Form</a>
+              <a class="nav-link custom-purple" href="#">Auto From</a>
+              <a class="nav-link custom-purple" href="#">Contact</a>
+              <a class="nav-link custom-purple" href="/logout">Logout</a>
           </ul>
         </div>
       </div>
@@ -68,6 +68,7 @@
   <header class="container mt-3">
     {% if session.get('uid') %}
       <p>Logged in as UID: {{ session['uid'] }}</p>
+      <p>User: {{ user }}</p>
     {% endif %}
   </header>
 
