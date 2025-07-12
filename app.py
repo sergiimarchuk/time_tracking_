@@ -102,8 +102,8 @@ def work_hours(year, month, day):
     form = WorkHoursForm()
 
     if form.validate_on_submit():
-        # Тут логіка збереження в базу
-        # Наприклад:
+        # here can doing anythong to insert some data into db 
+        # example:
         # save_task(session['uid'], date_obj, form.task_name.data, form.start_time.data, form.end_time.data, form.extra_info.data)
 
         flash("Task successfully added!")
