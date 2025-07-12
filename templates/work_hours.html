@@ -7,9 +7,7 @@
     <h2 class="text-center mb-4">Work Hours for {{ date.strftime('%A, %B %d, %Y') }}</h2>
 
     <form method="POST" action="">
-        {% if csrf_token %}
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        {% endif %}
+        {{ form.hidden_tag() }}
 
         <!-- Header Row -->
         <div class="row fw-bold mb-2">
@@ -21,25 +19,46 @@
         <!-- Input Row -->
         <div class="row mb-3">
             <div class="col-md-4">
-                <input type="text" class="form-control" name="task_name" placeholder="Enter task name" required>
+                {{ form.task_name(class="form-control", placeholder="Enter task name") }}
+                {% if form.task_name.errors %}
+                    <div class="text-danger small">
+                        {% for error in form.task_name.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             <div class="col-md-4">
-                <input type="time" class="form-control" name="start_time" required>
+                {{ form.start_time(class="form-control") }}
+                {% if form.start_time.errors %}
+                    <div class="text-danger small">
+                        {% for error in form.start_time.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             <div class="col-md-4">
-                <input type="time" class="form-control" name="end_time" required>
+                {{ form.end_time(class="form-control") }}
+                {% if form.end_time.errors %}
+                    <div class="text-danger small">
+                        {% for error in form.end_time.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
 
         <!-- Extra Data -->
         <div class="mb-3">
             <label for="extra_info" class="form-label">Extra Data About This Task</label>
-            <textarea class="form-control" id="extra_info" name="extra_info" rows="3" placeholder="Optional notes..."></textarea>
+            {{ form.extra_info(class="form-control", rows="3", placeholder="Optional notes...") }}
         </div>
 
         <!-- Submit Button -->
         <div class="text-center">
-            <button type="submit" class="btn btn-success">Add Task to DB</button>
+            {{ form.submit(class="btn btn-success") }}
         </div>
     </form>
 </div>
