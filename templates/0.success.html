@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Success - My Flask App{% endblock %}
+
+{% block content %}
+  <h1>Success!</h1>
+  <p>Your form was submitted successfully.</p>
+
+  <!-- Put your actual form or success message here -->
+  <form method="POST" action="/some-action">
+    <div class="mb-3">
+      <label for="exampleInput" class="form-label">Example input</label>
+      <input type="text" class="form-control" id="exampleInput" name="exampleInput" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Again</button>
+  </form>
+{% endblock %}
