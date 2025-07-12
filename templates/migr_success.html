@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Home | My Flask App{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Welcome to My Flask App</h1>
+    <p class="lead">This is a simple and beautiful Flask template to get started quickly.</p>
+    <a href="#" class="btn btn-primary">Get Started</a>
+</div>
+<div>
+
+{# {{ user, password }} #}
+{# {{ month, year  }}  #}
+
+{# <p>Month: {{ month }}</p>  #}
+{# <p>Year: {{ year }}</p>  #}
+{#  {# <p>UID: {{ uid }}</p> #}
+</div>
+
+<div>
+
+<h2>{{ month }} {{ year }}</h2>
+
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th>Su</th>
+            <th>Mo</th>
+            <th>Tu</th>
+            <th>We</th>
+            <th>Th</th>
+            <th>Fr</th>
+            <th>Sa</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for week in calendar_weeks %}
+        <tr>
+            {% for day in week %}
+                {% if day == 0 %}
+                    <td></td>
+                {% else %}
+                    <td>
+                        <a href="{{ url_for('work_hours', year=year, month=month_num, day=day) }}">
+                            {{ day }}
+                        </a>
+                    </td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+{% endblock %}
+
