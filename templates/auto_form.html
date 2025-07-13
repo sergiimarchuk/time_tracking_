@@ -1,97 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{% block title %}My Flask App{% endblock %}</title>
+{% extends "base.html" %}
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <div class="container d-flex align-items-center justify-content-between">
-      <a class="navbar-brand" href="/">MyFlask</a>
+{% block title %}Auto Form Upload{% endblock %}
 
-      <div class="d-none d-lg-flex flex-grow-1 justify-content-center gap-2" style="max-width: 550px;">
-        <div class="input-group input-group-sm" style="min-width: 150px;">
-          <input id="datePicker" type="text" class="form-control" placeholder="Select date" readonly />
-          <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-        </div>
-        <div class="input-group input-group-sm" style="min-width: 140px;">
-          <input id="timeStartPicker" type="text" class="form-control" placeholder="Start time" readonly />
-          <span class="input-group-text"><i class="bi bi-clock"></i></span>
-        </div>
-        <div class="input-group input-group-sm" style="min-width: 140px;">
-          <input id="timeEndPicker" type="text" class="form-control" placeholder="End time" readonly />
-          <span class="input-group-text"><i class="bi bi-clock-history"></i></span>
-        </div>
-        <div>
-          <button type="submit" class="btn btn-primary">Jump</button>
-        </div>
-      </div>
-
-      <div class="d-flex align-items-center">
-        <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link custom-purple" href="#">Auto Form</a></li>
-            <li class="nav-item"><a class="nav-link custom-purple" href="#">Contact</a></li>
-            <li class="nav-item"><a class="nav-link custom-purple" href="{{ url_for('calendar') }}">Time Tracking Calendar</a></li>
-            <li class="nav-item"><a class="nav-link custom-purple" href="/logout">Logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <header class="container mt-3">
-    {% if session.get('uid') %}
-      <p>Logged in as UID: {{ session['uid'] }}</p>
-      <p>User: {{ user }}</p>
-      <p>{{ month }} {{ year }}</p>
-    {% endif %}
-  </header>
-
-  <main class="container mt-4">
+{% block content %}
   <h2>Auto Form Upload</h2>
+
   <form action="{{ url_for('auto_form') }}" method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
     <div class="mb-3">
-      <label for="oil_file" class="form-label">Upload Oil Level File</label>
-      <input type="file" class="form-control" id="oil_file" name="oil_file" required>
+      {{ form.plate_number.label(class="form-label") }}
+      {{ form.plate_number(class="form-control", placeholder="Enter plate number") }}
+      {% for error in form.plate_number.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
     </div>
 
     <div class="mb-3">
-      <label for="antifreeze_file" class="form-label">Upload Antifreeze Level File</label>
-      <input type="file" class="form-control" id="antifreeze_file" name="antifreeze_file" required>
+      {{ form.oil_file.label(class="form-label") }}
+      {{ form.oil_file(class="form-control") }}
+      {% for error in form.oil_file.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
     </div>
 
     <div class="mb-3">
-      <label for="extra_info" class="form-label">Extra Info (optional)</label>
-      <textarea class="form-control" id="extra_info" name="extra_info" rows="3"></textarea>
+      {{ form.antifreeze_file.label(class="form-label") }}
+      {{ form.antifreeze_file(class="form-control") }}
+      {% for error in form.antifreeze_file.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
     </div>
 
-    <button type="submit" class="btn btn-success">Load Info to Server</button>
+    <div class="mb-3">
+      {{ form.extra_info.label(class="form-label") }}
+      {{ form.extra_info(class="form-control", rows=3) }}
+    </div>
+
+    {{ form.submit(class="btn btn-success") }}
   </form>
-    {% block content %}{% endblock %}
-  </main>
-
-  <footer class="text-center mt-5 mb-3 text-muted">
-    &copy; {{ current_year }} My Flask App
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script>
-    flatpickr("#datePicker", { dateFormat: "Y-m-d" });
-    flatpickr("#timeStartPicker", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true });
-    flatpickr("#timeEndPicker", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true });
-  </script>
-</body>
-</html>
+{% endblock %}
