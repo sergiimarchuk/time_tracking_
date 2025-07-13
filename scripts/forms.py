@@ -17,3 +17,8 @@ class WorkHoursForm(FlaskForm):
     def validate_end_time(self, field):
         if self.start_time.data and field.data <= self.start_time.data:
             raise ValidationError('End time must be after start time.')
+
+class ContactForm(FlaskForm):
+    email = StringField('Your Email', validators=[DataRequired()])
+    message = TextAreaField('Message', validators=[DataRequired()])
+    submit = SubmitField('Send')
