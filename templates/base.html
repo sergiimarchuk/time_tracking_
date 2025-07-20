@@ -54,7 +54,7 @@
 
   <header class="container mt-3">
     {% if session.get('uid') %}
-      <p>Logged in as UID: {{ session['uid'] }}</p>
+      {# <p>Logged in as UID: {{ session['uid'] }}</p> #}
       <p>User: {{ user }}</p>
     {% endif %}
   </header>

@@ -1,0 +1,4 @@
+dn: uid=1000,ou=users,dc=myorg,dc=local
+changetype: modify
+add: objectClass
+objectClass: simpleSecurityObject

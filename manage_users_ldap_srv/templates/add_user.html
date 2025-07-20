@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add LDAP User</title>
+</head>
+<body>
+    <h2>Add New LDAP User</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p style="color: {% if category == 'success' %}green{% else %}red{% endif %};">{{ message }}</p>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+        <label>Name: <input type="text" name="name" required></label><br><br>
+        <label>Email: <input type="email" name="email" required></label><br><br>
+        <label>Login: <input type="text" name="login" required></label><br><br>
+        <label>Password: <input type="text" name="password" required></label><br><br>
+        <button type="submit">Create User</button>
+    </form>
+</body>
+</html>
+

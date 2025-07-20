@@ -135,31 +135,37 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+from scripts.forms import AutoUploadForm
+
 @app.route('/auto_form', methods=['GET', 'POST'])
 def auto_form():
     if 'uid' not in session:
         flash("Please log in.")
         return redirect(url_for('login'))
 
-    if request.method == 'POST':
-        oil_file = request.files.get('oil_file')
-        antifreeze_file = request.files.get('antifreeze_file')
-        extra_info = request.form.get('extra_info')
+    form = AutoUploadForm()
 
-        if oil_file and allowed_file(oil_file.filename):
-            filename = secure_filename(oil_file.filename)
-            oil_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    if form.validate_on_submit():
+        # Access form data
+        plate_number = form.plate_number.data
+        oil_file = form.oil_file.data
+        antifreeze_file = form.antifreeze_file.data
+        extra_info = form.extra_info.data
 
-        if antifreeze_file and allowed_file(antifreeze_file.filename):
-            filename = secure_filename(antifreeze_file.filename)
-            antifreeze_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # Save files safely
+        oil_filename = secure_filename(oil_file.filename)
+        antifreeze_filename = secure_filename(antifreeze_file.filename)
 
-        # You can save `extra_info` or log it
-        print("Extra Info:", extra_info)
+        oil_file.save(os.path.join(app.config['UPLOAD_FOLDER'], oil_filename))
+        antifreeze_file.save(os.path.join(app.config['UPLOAD_FOLDER'], antifreeze_filename))
+
+        print(f"Plate Number: {plate_number}")
+        print(f"Extra Info: {extra_info}")
 
         flash("Files uploaded successfully.")
         return redirect(url_for('auto_form'))
 
+    # GET or validation failure
     username = session.get('username')
     uid = session.get('uid')
 
@@ -176,8 +182,26 @@ def auto_form():
         calendar_weeks=calendar_weeks,
         today_year=today.year,
         today_month=today.month,
-        today_day=today.day
+        today_day=today.day,
+        form=form  # pass the form to template
     )
+
+
+from scripts.forms import ContactForm  # make sure this is imported
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    form = ContactForm()
+
+    if form.validate_on_submit():
+        email = form.email.data
+        message = form.message.data
+        print(f"Contact form submitted by {email}: {message}")
+        flash("Message sent successfully!")
+        return redirect(url_for('contact'))
+
+    return render_template('contact.html', form=form)  # <-- this is crucial
+
 
 
 @app.route('/logout')

@@ -1,0 +1,7 @@
+dn: uid=e220314,ou=users,dc=myorg,dc=local
+objectClass: inetOrgPerson
+cn: e220314
+sn: 314
+uid: e220314
+userPassword: 1qaz
+

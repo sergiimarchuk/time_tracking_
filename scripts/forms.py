@@ -22,3 +22,17 @@ class ContactForm(FlaskForm):
     email = StringField('Your Email', validators=[DataRequired()])
     message = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('Send')
+
+
+from flask_wtf.file import FileField, FileRequired
+from wtforms import StringField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired
+from flask_wtf import FlaskForm
+
+class AutoUploadForm(FlaskForm):
+    plate_number = StringField('Plate Number', validators=[DataRequired()])
+    oil_file = FileField('Upload Oil Level File', validators=[FileRequired()])
+    antifreeze_file = FileField('Upload Antifreeze Level File', validators=[FileRequired()])
+    extra_info = TextAreaField('Extra Info (optional)')
+    submit = SubmitField('Load Info to Server')
+
