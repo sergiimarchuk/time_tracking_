@@ -42,4 +42,36 @@ def add_user_to_ldap(login, name, email, password):
 
     os.system(f"docker cp {fix_ldif} openldap:/{login}_fix.ldif")
     os.system(f"docker exec openldap ldapmodify -x -D 'cn=admin,dc=myorg,dc=local' -w admin -f /{login}_fix.ldif")
+    
+    
+    
+    
+import psycopg2
+
+def insert_user_to_db(first_name, second_name, email, extra_info, ldap_entry_uuid):
+    conn = psycopg2.connect(
+        dbname="postgres",  # ✅ correct DB name from your setup
+        user="myuser",
+        password="mypassword",
+        host="localhost",
+        port="55432"
+    )
+    cursor = conn.cursor()
+
+    insert_query = """
+        INSERT INTO auto_time_tracker.users (ldap_entry_uuid, vor_name, nach_name, additional_contact_info, email)
+        VALUES (%s, %s, %s, %s, %s)
+    """
+    cursor.execute(insert_query, (
+        ldap_entry_uuid,
+        first_name,
+        second_name,
+        extra_info,
+        email
+    ))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 
