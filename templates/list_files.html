@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}My Uploads{% endblock %}
+
+ 
+{% block content %}
+  <h3>Your Uploaded Files</h3>
+  {% if files %}
+    <ul class="list-group">
+      {% for f in files %}
+        <li class="list-group-item">
+          {{ f.file_type }}:
+          <a href="{{ url_for('uploaded_file', filename=f.file_path) }}">{{ f.file_path }}</a>
+          (uploaded at {{ f.uploaded_at }})
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No uploaded files yet.</p>
+  {% endif %}
+{% endblock %}
+
+
+

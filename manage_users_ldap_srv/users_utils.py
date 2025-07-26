@@ -56,7 +56,7 @@ import psycopg2
 
 def insert_user_to_db(first_name, second_name, email, extra_info, ldap_entry_uuid):
     conn = psycopg2.connect(
-        dbname="postgres",  # ✅ correct DB name from your setup
+        dbname="mydatabase",  # ✅ correct DB name from your setup
         user="myuser",
         password="mypassword",
         host="localhost",
