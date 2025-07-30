@@ -79,6 +79,49 @@ def login():
         return redirect(url_for('login'))
     return render_template('login.html', form=form)
 
+from flask import request, render_template, flash, redirect, url_for, session
+from datetime import datetime, date, time, timedelta
+from scripts.forms import WorkHoursForm
+from scripts.db_ops import get_user_id_by_uid
+from scripts.db_ops_tasks_tracking import insert_task, get_tasks_for_user_on_date
+
+@app.route('/work_hours/<int:year>/<int:month>/<int:day>', methods=['GET', 'POST'])
+def work_hours(year, month, day):
+    if 'uid' not in session:
+        flash("Please log in.")
+        return redirect(url_for('login'))
+
+    try:
+        date_obj = date(year, month, day)
+    except ValueError:
+        flash("Invalid date.")
+        return redirect(url_for('login'))
+
+    form = WorkHoursForm()
+    uid = session['uid']
+    user_id = get_user_id_by_uid(uid)
+
+    if form.validate_on_submit():
+        # Combine form time with the selected date
+        start_dt = datetime.combine(date_obj, form.start_time.data)
+        end_dt = datetime.combine(date_obj, form.end_time.data)
+
+        insert_task(
+            user_id=user_id,
+            task_name=form.task_name.data,
+            start_time=start_dt,
+            end_time=end_dt,
+            extra_data=form.extra_info.data
+        )
+        flash("Task successfully added!")
+        return redirect(url_for('work_hours', year=year, month=month, day=day))
+
+    tasks = get_tasks_for_user_on_date(user_id, date_obj)
+
+    return render_template('work_hours.html', date=date_obj, uid=uid, form=form, tasks=tasks)
+
+
+'''
     
 @app.route('/work_hours/<int:year>/<int:month>/<int:day>', methods=['GET', 'POST'])
 def work_hours(year, month, day):
@@ -103,6 +146,8 @@ def work_hours(year, month, day):
         return redirect(url_for('work_hours', year=year, month=month, day=day))
 
     return render_template('work_hours.html', date=date_obj, uid=session['uid'], form=form)
+
+'''
 
 @app.route('/calendar')
 def calendar():

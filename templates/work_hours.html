@@ -61,5 +61,41 @@
             {{ form.submit(class="btn btn-success") }}
         </div>
     </form>
+
+    <hr class="my-4">
+
+    <h4 class="mb-3">Logged Tasks for {{ date.strftime('%B %d, %Y') }}</h4>
+
+    {% if tasks %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration</th>
+                        <th>Extra Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>{{ task[1] }}</td>
+                            <td>{{ task[2].strftime('%H:%M') }}</td>
+                            <td>{{ task[3].strftime('%H:%M') }}</td>
+                            <td>
+                                {% set duration = task[3] - task[2] %}
+                                {{ duration.seconds // 3600 }}h {{ (duration.seconds // 60) % 60 }}m
+                            </td>
+                            <td>{{ task[4] or '—' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-muted">No tasks logged for this day.</p>
+    {% endif %}
 </div>
 {% endblock %}

@@ -23,7 +23,6 @@ def get_db_connection():
 def _validate_uuid(uid):
     return str(uid)
 
-
 def get_user_id_by_uid(uid):
     with get_db_connection() as conn:
         with conn.cursor() as cur:
@@ -31,7 +30,6 @@ def get_user_id_by_uid(uid):
             cur.execute("SELECT id FROM users WHERE ldap_entry_uuid = %s", (uid,))
             result = cur.fetchone()
             return result[0] if result else None
-
 
 def get_user_id_by_int_id(user_id):
     # user_id is an integer like 3, 5, 42
@@ -41,8 +39,6 @@ def get_user_id_by_int_id(user_id):
             cur.execute("SELECT id FROM users WHERE id = %s", (user_id,))
             result = cur.fetchone()
             return result[0] if result else None
-
-
 
 def create_user_if_not_exists(uid, vor_name, nach_name, email="no-email@example.com", contact_info=None):
     uid_str = _validate_uuid(uid)
