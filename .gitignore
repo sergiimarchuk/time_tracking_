@@ -40,4 +40,6 @@ build/
 *.bak
 log
 *log
-b*.
+
+# Ignore all folders named upload or uploads
+upload*/
