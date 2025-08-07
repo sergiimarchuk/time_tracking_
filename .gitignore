@@ -61,3 +61,4 @@ manage_users_ldap_srv/UI_manage_usrLDAP/ldap_config/
 manage_users_ldap_srv/UI_manage_usrLDAP/ldap_data/
 ldap-demo/ldap_data/
 ldap-demo/ldap_config/
+upload*
