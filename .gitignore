@@ -43,4 +43,21 @@ log
 
 # Ignore all folders named upload or uploads
 upload*/
+<<<<<<< HEAD
+=======
+ldap-demo/ldap_config/cn=config.ldif
+postgres-data/
+*.pyc
+__pycache__/
+.DS_Store
+.vscode/
+ldap-demo/ldap_config/cn=config.ldif
+ldap-demo/ldap_config/
+ldap-demo/ldap_data/
+manage_users_ldap_srv/UI_manage_usrLDAP/ldap_config/
+
+manage_users_ldap_srv/UI_manage_usrLDAP/ldap_config/
+>>>>>>> 31a563c (Clean up LDAP config and data files from Git tracking, update .gitignore)
 manage_users_ldap_srv/UI_manage_usrLDAP/ldap_data/
+ldap-demo/ldap_data/
+ldap-demo/ldap_config/
