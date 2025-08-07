@@ -43,3 +43,4 @@ log
 
 # Ignore all folders named upload or uploads
 upload*/
+manage_users_ldap_srv/UI_manage_usrLDAP/ldap_data/
