@@ -5,10 +5,8 @@ services:
     image: postgres:16
     container_name: my_postgres
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydatabase
+    env_file:
+      - .env
     ports:
       - "55432:5432"
     volumes:
