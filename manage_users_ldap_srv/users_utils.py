@@ -1,4 +1,7 @@
 import os
+import sys
+sys.path.insert(0, '/opt/dev-py/TimeTracking-dev/libs')  # make sure this path is correct
+
 
 LDIF_TEMPLATE = """dn: uid={login},ou=users,dc=myorg,dc=local
 objectClass: inetOrgPerson
@@ -39,9 +42,9 @@ def add_user_to_ldap(login, name, email, password):
 
     cmds = [
         f"docker cp {user_ldif} openldap:/{login}.ldif",
-        f"docker exec openldap ldapadd -x -D 'cn=admin,dc=myorg,dc=local' -w admin -f /{login}.ldif",
+        f"docker exec openldap ldapadd -x -D 'cn=admin,dc=MyOrg,dc=local' -w admin -f /{login}.ldif",
         f"docker cp {fix_ldif} openldap:/{login}_fix.ldif",
-        f"docker exec openldap ldapmodify -x -D 'cn=admin,dc=myorg,dc=local' -w admin -f /{login}_fix.ldif"
+        f"docker exec openldap ldapmodify -x -D 'cn=admin,dc=MyOrg,dc=local' -w admin -f /{login}_fix.ldif"
     ]
 
     for cmd in cmds:
