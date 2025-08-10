@@ -9,8 +9,8 @@ ADMIN_DN = 'cn=admin,dc=myorg,dc=local'
 ADMIN_PASSWORD = 'admin'
 
 # New user info
-USER_UID = 'e220314_b1'
-USER_CN = 'e220314_b1'  # common name, can be full name or username
+USER_UID = 'empl314_b1'
+USER_CN = 'empl314_b1'  # common name, can be full name or username
 USER_GIVENNAME = 'Sergii'  # example first name
 USER_SN = 'Ivanov'         # example surname
 USER_EMAIL = 'sergii@example.com'
